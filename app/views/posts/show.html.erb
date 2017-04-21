@@ -1,0 +1,31 @@
+<% content_for :dashboard do%>
+    <a style="font-size: 16px" href="/posts">Bright Ideas</a>
+<% end %>
+<div class="container">
+  <div style="border: solid black 2px">
+    <h5><a href="/users/<%= @post.user.id%>"><%= @post.user.alias%></a> says:</h5>
+    <p><%= @post.idea %></p>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <h5>People Who Liked this Post:</h5>
+  <table class="striped">
+    <thead>
+    <tr>
+      <th>Alias</th>
+      <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @post.user_likes.uniq.each do |user|%>
+        <tr>
+          <td><a href="/users/<%= user.id%>"><%= user.alias %></a></td>
+          <td><%= user.name %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

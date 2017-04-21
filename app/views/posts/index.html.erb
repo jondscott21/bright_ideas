@@ -1,0 +1,32 @@
+<div class="container">
+  <h3>Hi <%= current_user.name %>!</h3>
+  <form action="/posts/create" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+    <div class="input-field">
+      <textarea class="materialize-textarea" name="post[idea]" id="idea"></textarea>
+      <label for="idea">Post something witty here...</label>
+    </div>
+    <input type="submit" class="btn blue" value="Idea!">
+  </form>
+  <br>
+  <br>
+  <br>
+  <% @posts.each do |post| %>
+    <div style="border: solid black 2px">
+      <h5><a href="/users/<%= post.user.id%>"><%= post.user.alias%></a> says:</h5>
+      <p><%= post.idea %></p>
+      <% if current_user == post.user %>
+      <form action="/posts/<%=  post.id%>" method="post">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="_method" value="delete">
+        <input type="submit" class="btn red" value="Delete">
+      </form>
+      <% end %>
+    </div>
+      <h5><a href="/likes/<%= post.id%>">Like</a> | <a href="/posts/<%= post.id%>"><%= post.likes.count%> people</a> like this.</h5>
+      <br>
+      <br>
+  <% end %>
+
+</div>
